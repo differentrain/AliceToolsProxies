@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA4A76DC-53C7-482B-BDBE-3E791DDA0F73}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AliceToolsProxies</RootNamespace>
+    <AssemblyName>AliceToolsProxies</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\AliceAcxFileOperation.cs" />
+    <Compile Include="Abstracts\AliceAinFileOperation.cs" />
+    <Compile Include="Abstracts\AliceArFileOperation.cs" />
+    <Compile Include="Abstracts\AliceExFileOperation.cs" />
+    <Compile Include="Abstracts\AliceFileOperation.cs" />
+    <Compile Include="Abstracts\AliceToolsOutputConverter.cs" />
+    <Compile Include="Abstracts\IAliceToolsOperation.cs" />
+    <Compile Include="AliceToolsProxy.cs" />
+    <Compile Include="BasicMembers\AliceArchiveItem.cs" />
+    <Compile Include="BasicMembers\AliceArchiveItemConverter.cs" />
+    <Compile Include="BasicMembers\AliceToolsAinDumpOption.cs" />
+    <Compile Include="BasicMembers\AliceToolsAinSourceType.cs" />
+    <Compile Include="BasicMembers\AliceToolsArExtractOptions.cs" />
+    <Compile Include="BasicMembers\AliceToolsArgumentsWriter.cs" />
+    <Compile Include="BasicMembers\AliceToolsEnumArgumentAttribute.cs" />
+    <Compile Include="BasicMembers\AliceToolsOutput.cs" />
+    <Compile Include="BasicMembers\AliceToolsProxiesExtensions.cs" />
+    <Compile Include="BasicMembers\AliceToolsState.cs" />
+    <Compile Include="BasicMembers\OutputConvertionResult.cs" />
+    <Compile Include="InternalMembers\GetVersionOperationInner.cs" />
+    <Compile Include="InternalMembers\UtilitiesInner.cs" />
+    <Compile Include="InternalMembers\VersionReaderInner.cs" />
+    <Compile Include="Operations\AliceToolsAcxBuild.cs" />
+    <Compile Include="Operations\AliceToolsAcxDump.cs" />
+    <Compile Include="Operations\AliceToolsAinCompare.cs" />
+    <Compile Include="Operations\AliceToolsAinDump.cs" />
+    <Compile Include="Operations\AliceToolsAinEdit.cs" />
+    <Compile Include="Operations\AliceToolsArExtract.cs" />
+    <Compile Include="Operations\AliceToolsArList.cs" />
+    <Compile Include="Operations\AliceToolsArPack.cs" />
+    <Compile Include="Operations\AliceToolsExBuild.cs" />
+    <Compile Include="Operations\AliceToolsExCompare.cs" />
+    <Compile Include="Operations\AliceToolsExDump.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
