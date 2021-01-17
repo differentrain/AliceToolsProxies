@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
 using AliceToolsProxies.Abstracts;
 using AliceToolsProxies.InternalMembers;
 
@@ -188,19 +187,7 @@ namespace AliceToolsProxies
         /// <summary>
         /// Shutdown alice-tools process invoked by this instance.
         /// </summary>
-        public void Shutdown()
-        {
-
-            try
-            {
-                _runingProcess.Kill();
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch { }
-#pragma warning restore CA1031 // Do not catch general exception types
-            _runingProcess.Dispose();
-
-        }
+        public void Shutdown() => _processReader?.ShutDown();
 
 
         private async Task<AliceToolsOutput> InvokeCoreAsync(IAliceToolsOperation operation, ProcessStartInfo startInfo)
@@ -209,46 +196,20 @@ namespace AliceToolsProxies
             return await ProcessRunAsync(startInfo).ConfigureAwait(false);
         }
 
-        private Process _runingProcess;
+
+        private ProcessOutputReaderInner _processReader;
 
         private async Task<AliceToolsOutput> ProcessRunAsync(ProcessStartInfo startInfo)
         {
-            var process = new Process { StartInfo = startInfo };
-            _runingProcess = process;
+            var reader = new ProcessOutputReaderInner(startInfo);
+            _processReader = reader;
             try
             {
-                //not start
-                if (!process.Start())
-                {
-                    return await CreateOutputMessageAsync(AliceToolsState.NotRunning, null, "alice-tools have not run.").ConfigureAwait(false);
-                }
-                string output = await process.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
-                //not exit
-                if (!process.HasExited)
-                {
-                    process.Kill();
-                    return await CreateOutputMessageAsync(AliceToolsState.UnknowException, null, "Unknow exception.").ConfigureAwait(false);
-                }
-                //has output message.
-                if (!string.IsNullOrEmpty(output))
-                {
-                    if (process.ExitCode != 0)
-                    {
-                        return await CreateErrorAsync(process, AliceToolsState.PartlySuccessful, output).ConfigureAwait(false);
-                    }
-                    return await CreateOutputMessageAsync(AliceToolsState.Successful, output).ConfigureAwait(false);
-                }
-                //has no output.
-                if (process.ExitCode == 0)
-                {
-                    return await CreateOutputMessageAsync(AliceToolsState.Successful, string.Empty).ConfigureAwait(false);
-                }
-                //error output
-                return await CreateErrorAsync(process, AliceToolsState.Fail).ConfigureAwait(false);
+                return await reader.ReadAsync().ConfigureAwait(false);
             }
             finally
             {
-                process.Dispose();
+                _processReader = null;
             }
         }
 
@@ -283,15 +244,6 @@ namespace AliceToolsProxies
         #endregion
 
         #region private static members
-
-        private static async Task<AliceToolsOutput> CreateOutputMessageAsync(AliceToolsState state, string msg = null, string error = null) =>
-                         await Task.FromResult(new AliceToolsOutput(state, msg, error)).ConfigureAwait(false);
-
-        private static async Task<AliceToolsOutput> CreateErrorAsync(Process process, AliceToolsState state, string msg = null)
-        {
-            string error = await process.StandardError.ReadToEndAsync().ConfigureAwait(false);
-            return await CreateOutputMessageAsync(state, msg, error).ConfigureAwait(false);
-        }
 
         private static ProcessStartInfo EnsureAndCreateStartInfo(string aliceToolsPath)
         {

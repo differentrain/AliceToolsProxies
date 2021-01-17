@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AliceToolsGui.AliceToolsProxies
+namespace AliceToolsProxies
 {
     /// <summary>
     /// Provides methods for extensing members in AliceToolsProxies namespace.

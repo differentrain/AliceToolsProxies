@@ -11,6 +11,9 @@ namespace AliceToolsProxies
     [Flags]
     public enum AliceToolsArExtractOptions
     {
+        /// <summary>
+        /// Default value.
+        /// </summary>
         [AliceToolsEnumArgument()]
         Default = 0,
         /// <summary>

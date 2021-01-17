@@ -62,6 +62,7 @@
     <Compile Include="BasicMembers\AliceToolsState.cs" />
     <Compile Include="BasicMembers\OutputConvertionResult.cs" />
     <Compile Include="InternalMembers\GetVersionOperationInner.cs" />
+    <Compile Include="InternalMembers\ProcessOutputReaderInner.cs" />
     <Compile Include="InternalMembers\UtilitiesInner.cs" />
     <Compile Include="InternalMembers\VersionReaderInner.cs" />
     <Compile Include="Operations\AliceToolsAcxBuild.cs" />
